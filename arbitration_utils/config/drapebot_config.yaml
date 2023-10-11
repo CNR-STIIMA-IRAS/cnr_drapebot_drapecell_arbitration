@@ -7,3 +7,4 @@ slope    : 20     # changes the slope, the higher the less slope
 midpoint : 0.3   # central point of the sigmoid
 offset   : 0.01
   
+arb_node_rate: 250

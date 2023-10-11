@@ -547,7 +547,7 @@ bool GTTrajArbitration::doUpdate(const ros::Time& time, const ros::Duration& per
   auto start = std::chrono::steady_clock::now();
 
   CNR_TRACE_START_THROTTLE_DEFAULT(this->logger());
-  std::stringstream report;
+  //std::stringstream report;
   std::lock_guard<std::mutex> lock(m_mtx);
 
   if (first_cycle_)

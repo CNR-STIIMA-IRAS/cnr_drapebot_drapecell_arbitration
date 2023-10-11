@@ -8,8 +8,10 @@ int main(int argc, char **argv)
 {
   ros::init(argc, argv, "arbitration_node");
   ros::NodeHandle nh;
-  ros::AsyncSpinner spinner(4);
-  spinner.start();
+
+  // Enrico 2023.10.11
+  // ros::AsyncSpinner spinner(4);
+  // spinner.start();
   
   ArbitrationUtils au(nh);
    
@@ -27,10 +29,17 @@ int main(int argc, char **argv)
   }
   if (add_obj)
     au.addObj();
-  
+
+  int arb_node_rate;
+  if(!nh.getParam("arb_node_rate",   arb_node_rate))
+  {
+    arb_node_rate = 250;
+    ROS_WARN_STREAM("param /arb_node_rate not set . DEFAULT : " << arb_node_rate );
+  }
+
   ros::Duration(0.1).sleep();
   
-  ros::Rate rate(125);
+  ros::Rate rate(arb_node_rate);
   
   ros::Publisher pubd = nh.advertise<std_msgs::Float32>("/dist", 1000);
   ros::Publisher pubr = nh.advertise<std_msgs::Float32>("/reach", 1000);
@@ -87,7 +96,7 @@ int main(int argc, char **argv)
     }
     
     
-    
+    ros::spinOnce();
     rate.sleep();
   }
   ros::waitForShutdown();

@@ -263,8 +263,10 @@ int main(int argc, char **argv)
 {
   ros::init(argc, argv, "arbitration_node");
   ros::NodeHandle nh;
-  ros::AsyncSpinner spinner(4);
-  spinner.start();
+
+  // Enrico 2023.10.11
+  // ros::AsyncSpinner spinner(4);
+  // spinner.start();
 
 
   ros::ServiceClient add_obj_ = nh.serviceClient<object_loader_msgs::AddObjects> ( "add_object_to_scene" ) ;
@@ -274,55 +276,136 @@ int main(int argc, char **argv)
   ROS_DEBUG_STREAM("adding object");
   
 
-
+  // Enrico 2023.10.11
   //TODO::make a function to add objects
-{
-  geometry_msgs::Pose obj_pose;
-  std::vector<double> pos;
-  if ( !nh.getParam ( "object_geometries/pose1", pos) )
-  {
-    ROS_ERROR_STREAM(nh.getNamespace() << " /object_geometries/pose not set. return");
-    return -1;
-  }
-  vecToPose(pos,obj_pose);
-  object_loader_msgs::AddObjects srv;  
-  {
-    object_loader_msgs::Object obj;
+// {
+//   geometry_msgs::Pose obj_pose;
+//   std::vector<double> pos;
+//   if ( !nh.getParam ( "object_geometries/pose1", pos) )
+//   {
+//     ROS_ERROR_STREAM(nh.getNamespace() << " /object_geometries/pose1 not set. return");
+//     return -1;
+//   }
+//   vecToPose(pos,obj_pose);
+//   object_loader_msgs::AddObjects srv;  
+//   {
+//     object_loader_msgs::Object obj;
     
-    obj.object_type="wall";
+//     obj.object_type="wall1";
     
-    obj.pose.pose = obj_pose;
-    obj.pose.header.frame_id = "base_link";
-    srv.request.objects.push_back(obj);
-  }
-  add_obj_.call(srv);
-}
-{
-  geometry_msgs::Pose obj_pose;
-  std::vector<double> pos;
-  if ( !nh.getParam ( "object_geometries/pose2", pos) )
-  {
-    ROS_ERROR_STREAM(nh.getNamespace() << " /object_geometries/pose not set. return");
-    return -1;
-  }
-  vecToPose(pos,obj_pose);
-  object_loader_msgs::AddObjects srv;  
-  {
-    object_loader_msgs::Object obj;
+//     obj.pose.pose = obj_pose;
+//     obj.pose.header.frame_id = "base_link";
+//     srv.request.objects.push_back(obj);
+//   }
+//   add_obj_.call(srv);
+// }
+// {
+//   geometry_msgs::Pose obj_pose;
+//   std::vector<double> pos;
+//   if ( !nh.getParam ( "object_geometries/pose2", pos) )
+//   {
+//     ROS_ERROR_STREAM(nh.getNamespace() << " /object_geometries/pose2 not set. return");
+//     return -1;
+//   }
+//   vecToPose(pos,obj_pose);
+//   object_loader_msgs::AddObjects srv;  
+//   {
+//     object_loader_msgs::Object obj;
     
-    obj.object_type="wall";
+//     obj.object_type="wall2";
     
-    obj.pose.pose = obj_pose;
-    obj.pose.header.frame_id = "base_link";
-    srv.request.objects.push_back(obj);
-  }
-  add_obj_.call(srv);
-}
-  
+//     obj.pose.pose = obj_pose;
+//     obj.pose.header.frame_id = "base_link";
+//     srv.request.objects.push_back(obj);
+//   }
+//   add_obj_.call(srv);
+// }
+// {
+//   geometry_msgs::Pose obj_pose;
+//   std::vector<double> pos;
+//   if ( !nh.getParam ( "object_geometries/pose3", pos) )
+//   {
+//     ROS_ERROR_STREAM(nh.getNamespace() << " /object_geometries/pose3 not set. return");
+//     return -1;
+//   }
+//   vecToPose(pos,obj_pose);
+//   object_loader_msgs::AddObjects srv;  
+//   {
+//     object_loader_msgs::Object obj;
+    
+//     obj.object_type="wall2";
+    
+//     obj.pose.pose = obj_pose;
+//     obj.pose.header.frame_id = "base_link";
+//     srv.request.objects.push_back(obj);
+//   }
+//   add_obj_.call(srv);
+// } 
+// {
+//   geometry_msgs::Pose obj_pose;
+//   std::vector<double> pos;
+//   if ( !nh.getParam ( "object_geometries/pose4", pos) )
+//   {
+//     ROS_ERROR_STREAM(nh.getNamespace() << " /object_geometries/pose4 not set. return");
+//     return -1;
+//   }
+//   vecToPose(pos,obj_pose);
+//   object_loader_msgs::AddObjects srv;  
+//   {
+//     object_loader_msgs::Object obj;
+    
+//     obj.object_type="table_mold1";
+    
+//     obj.pose.pose = obj_pose;
+//     obj.pose.header.frame_id = "base_link";
+//     srv.request.objects.push_back(obj);
+//   }
+//   add_obj_.call(srv);
+// }
+// {
+//   geometry_msgs::Pose obj_pose;
+//   std::vector<double> pos;
+//   if ( !nh.getParam ( "object_geometries/pose5", pos) )
+//   {
+//     ROS_ERROR_STREAM(nh.getNamespace() << " /object_geometries/pose5 not set. return");
+//     return -1;
+//   }
+//   vecToPose(pos,obj_pose);
+//   object_loader_msgs::AddObjects srv;  
+//   {
+//     object_loader_msgs::Object obj;
+    
+//     obj.object_type="table_mold2";
+    
+//     obj.pose.pose = obj_pose;
+//     obj.pose.header.frame_id = "base_link";
+//     srv.request.objects.push_back(obj);
+//   }
+//   add_obj_.call(srv);
+// }
+// {
+//   geometry_msgs::Pose obj_pose;
+//   std::vector<double> pos;
+//   if ( !nh.getParam ( "object_geometries/pose6", pos) )
+//   {
+//     ROS_ERROR_STREAM(nh.getNamespace() << " /object_geometries/pose6 not set. return");
+//     return -1;
+//   }
+//   vecToPose(pos,obj_pose);
+//   object_loader_msgs::AddObjects srv;  
+//   {
+//     object_loader_msgs::Object obj;
+    
+//     obj.object_type="table_pick";
+    
+//     obj.pose.pose = obj_pose;
+//     obj.pose.header.frame_id = "base_link";
+//     srv.request.objects.push_back(obj);
+//   }
+//   add_obj_.call(srv);
+// }
 
-  
-  ros::Rate rate(125);
-  
+    
   ros::Publisher pub_alpha = nh.advertise<std_msgs::Float32>("/alpha", 10);  
 
   double trg_distance  ;
@@ -341,6 +424,13 @@ int main(int argc, char **argv)
     target_pose = "ee_pose";
     ROS_WARN_STREAM("param /ee_pose not set . DEFAULT : " << ee_pose );
   }
+
+  int arb_node_rate;
+  if(!nh.getParam("arb_node_rate",   arb_node_rate))
+  {
+    arb_node_rate = 250;
+    ROS_WARN_STREAM("param /arb_node_rate not set . DEFAULT : " << arb_node_rate );
+  }
   
   
   ros::Publisher pub_col = nh.advertise<std_msgs::Float32>("/distance_from_col", 10);  
@@ -350,6 +440,9 @@ int main(int argc, char **argv)
   std_msgs::Float32 d_col_msg;
 
   Alpha al(nh);
+
+  ros::Rate rate(arb_node_rate);
+
 
   while (ros::ok())
   {
@@ -384,6 +477,7 @@ int main(int argc, char **argv)
 
     al.publishDistance();
 
+    ros::spinOnce();
     rate.sleep();
   }
   ros::waitForShutdown();
