@@ -844,6 +844,8 @@ bool GTTrajArbitration::doUpdate(const ros::Time& time, const ros::Duration& per
     this->publish(nominal_h_wrench_pub_,human_w);
   }
   
+  //Enrico 2023.10.11
+  std::lock_guard<std::mutex> unlock(m_mtx);
   
   auto mid = std::chrono::steady_clock::now();
   CNR_INFO_COND(this->logger(),std::chrono::duration_cast<std::chrono::microseconds>(mid - start).count()>=8000
