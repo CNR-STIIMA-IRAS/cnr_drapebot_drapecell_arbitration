@@ -6,8 +6,10 @@ int main(int argc, char **argv)
 {
   ros::init(argc, argv, "traj_estimation_node");
   ros::NodeHandle nh;
-  ros::AsyncSpinner spinner(4);
-  spinner.start();
+
+  // Enrico 2023.10.11
+  // ros::AsyncSpinner spinner(4);
+  // spinner.start();
   
   TrajEstimator te(nh);
   
@@ -54,6 +56,13 @@ int main(int argc, char **argv)
     update_Kest = "update_Kest";
     ROS_WARN_STREAM (nh.getNamespace() << " /update_Kest not set. default " << update_Kest);
   }
+
+  int hte_node_rate;
+  if ( !nh.getParam ( "hte_node_rate", hte_node_rate) )
+  {
+    hte_node_rate = 250;
+    ROS_WARN_STREAM (nh.getNamespace() << " /hte_node_rate not set. default " << hte_node_rate);
+  }
   
   ros::Subscriber wrench_sub    = nh.subscribe(wrench_topic , 10, &TrajEstimator::wrenchCallback  , &te);
   ros::Subscriber dwrench_sub   = nh.subscribe(dwrench_topic, 10, &TrajEstimator::dWrenchCallback , &te);
@@ -71,7 +80,7 @@ int main(int argc, char **argv)
   
   ros::Duration(0.1).sleep();
   
-  ros::Rate rate(125);
+  ros::Rate rate(hte_node_rate);
   
   static tf::TransformBroadcaster br;
   
@@ -96,9 +105,9 @@ int main(int argc, char **argv)
     
     }
     
-    
     ROS_INFO_STREAM_THROTTLE(5.0,"looping .");
     
+    ros::spinOnce();
     rate.sleep();
   }
   ros::waitForShutdown();

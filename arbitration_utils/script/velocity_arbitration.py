@@ -57,7 +57,7 @@ def node():
     au = arbitration_utils()
     current_sub = rospy.Subscriber("/current_velocity", TwistStamped, au.callback)
 
-    rate = rospy.Rate(125)  # 10hz
+    rate = rospy.Rate(250)  # 250hz
     while not rospy.is_shutdown():
         au.pub.publish(au.alpha)
         rate.sleep()

@@ -547,7 +547,7 @@ bool GTTrajArbitration::doUpdate(const ros::Time& time, const ros::Duration& per
   auto start = std::chrono::steady_clock::now();
 
   CNR_TRACE_START_THROTTLE_DEFAULT(this->logger());
-  std::stringstream report;
+  //std::stringstream report;
   std::lock_guard<std::mutex> lock(m_mtx);
 
   if (first_cycle_)
@@ -843,7 +843,6 @@ bool GTTrajArbitration::doUpdate(const ros::Time& time, const ros::Duration& per
     this->publish(robot_wrench_pub_,robot_w);
     this->publish(nominal_h_wrench_pub_,human_w);
   }
-  
   
   auto mid = std::chrono::steady_clock::now();
   CNR_INFO_COND(this->logger(),std::chrono::duration_cast<std::chrono::microseconds>(mid - start).count()>=8000
