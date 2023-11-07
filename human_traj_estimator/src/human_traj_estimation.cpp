@@ -110,12 +110,12 @@ void TrajEstimator::currPoseCallback(const geometry_msgs::PoseStampedConstPtr& m
   
   if (!init_pos_ok)
   {
-    ROS_INFO_STREAM("[human_traj_estimation] initializing pose for human desired trajectory update");
+    ROS_INFO_STREAM("[human_traj_estimation] Initializing pose for human desired trajectory update.");
     init_pose_ = cur_pos_;
     last_pose_ = cur_pos_;
     init_pos_ok = true;
   }
-  
+    
   tf2::fromMsg (cur_pos_.pose, T_robot_base_targetpose_);
   
 }
@@ -125,7 +125,7 @@ bool TrajEstimator::updatePoseEstimate(geometry_msgs::PoseStamped& ret)
 {
   if (init_pos_ok)
   {
-    ROS_INFO_STREAM_THROTTLE(5.0,"alpha_switch_: "<<alpha_switch_);
+    ROS_INFO_STREAM_THROTTLE(5.0," alpha_switch: " << alpha_switch_);
 //     ret.pose.orientation = init_pose_.pose.orientation;
     if (alpha_>alpha_switch_)
       ret.pose = last_pose_.pose;
@@ -213,7 +213,7 @@ bool TrajEstimator::resetPose(std_srvs::Trigger::Request  &req,
   // TODO::might not be needed while, check
   while(!init_pos_ok)
   {
-    ROS_INFO_STREAM_THROTTLE(1.0,"waiting for current pose to be read");
+    ROS_INFO_STREAM_THROTTLE(1.0,"Waiting for current pose to be read");
     ros::Duration(0.01);
   }
   init_pos_ok = true;
@@ -221,9 +221,9 @@ bool TrajEstimator::resetPose(std_srvs::Trigger::Request  &req,
   init_pose_ = cur_pos_;
   last_pose_ = cur_pos_;
   
-  ROS_INFO_STREAM("resetting estimation pose. new pose: \n" << init_pose_);
+  ROS_INFO_STREAM("Resetting estimation pose. New pose: \n" << init_pose_);
   
-  res.success=true;
+  res.success = true;
   return true;
 }
 

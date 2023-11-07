@@ -9,9 +9,8 @@ int main(int argc, char **argv)
   ros::init(argc, argv, "arbitration_node");
   ros::NodeHandle nh;
 
-  // Enrico 2023.10.11
-  // ros::AsyncSpinner spinner(4);
-  // spinner.start();
+  ros::AsyncSpinner spinner(4);
+  spinner.start();
   
   ArbitrationUtils au(nh);
    
@@ -95,8 +94,6 @@ int main(int argc, char **argv)
       pubvp.publish(m);
     }
     
-    
-    ros::spinOnce();
     rate.sleep();
   }
   ros::waitForShutdown();

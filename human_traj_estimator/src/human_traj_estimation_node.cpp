@@ -7,9 +7,8 @@ int main(int argc, char **argv)
   ros::init(argc, argv, "traj_estimation_node");
   ros::NodeHandle nh;
 
-  // Enrico 2023.10.11
-  // ros::AsyncSpinner spinner(4);
-  // spinner.start();
+  ros::AsyncSpinner spinner(4);
+  spinner.start();
   
   TrajEstimator te(nh);
   
@@ -94,10 +93,10 @@ int main(int argc, char **argv)
     }
     else
     {
-//       p.header.stamp = ros::Time::now();
-//       trajectory_pub.publish(p);
-//       if(robot_ref)
-//         r_trajectory_pub.publish(p);
+      p.header.stamp = ros::Time::now();
+      trajectory_pub.publish(p);
+      if(robot_ref)
+        r_trajectory_pub.publish(p);
       
       tf::Transform transform;
       tf::poseMsgToTF(p.pose,transform);
@@ -107,7 +106,6 @@ int main(int argc, char **argv)
     
     ROS_INFO_STREAM_THROTTLE(5.0,"looping .");
     
-    ros::spinOnce();
     rate.sleep();
   }
   ros::waitForShutdown();

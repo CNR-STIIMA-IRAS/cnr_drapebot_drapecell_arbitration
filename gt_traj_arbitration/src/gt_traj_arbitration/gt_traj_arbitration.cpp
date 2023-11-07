@@ -239,7 +239,7 @@ bool GTTrajArbitration::doInit()
 try
 {
   
-  ROS_INFO_STREAM(cnr_logger::BLUE()<< "qui"<<this->jointNames().size());
+  //ROS_INFO_STREAM(cnr_logger::BLUE()<< "qui"<<this->jointNames().size());
   
   for(auto n:this->jointNames())
     ROS_INFO_STREAM(cnr_logger::BLUE()<< "joint name: "<<n);
@@ -734,7 +734,7 @@ bool GTTrajArbitration::doUpdate(const ros::Time& time, const ros::Duration& per
       robot_wrench_ic<< control.segment(6,6);  
     }
     global_reference = robot_cartesian_error_actual_target_in_b;
-}
+  }
   else
   {
     global_reference = robot_cartesian_error_actual_target_in_b;
