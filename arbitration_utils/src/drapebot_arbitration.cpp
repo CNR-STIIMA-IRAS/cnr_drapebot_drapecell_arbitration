@@ -298,27 +298,27 @@ int main(int argc, char **argv)
     }
     add_obj_.call(srv);
   }
-// {
-//   geometry_msgs::Pose obj_pose;
-//   std::vector<double> pos;
-//   if ( !nh.getParam ( "object_geometries/pose2", pos) )
-//   {
-//     ROS_ERROR_STREAM(nh.getNamespace() << " /object_geometries/pose2 not set. return");
-//     return -1;
-//   }
-//   vecToPose(pos,obj_pose);
-//   object_loader_msgs::AddObjects srv;  
-//   {
-//     object_loader_msgs::Object obj;
-    
-//     obj.object_type="wall2";
-    
-//     obj.pose.pose = obj_pose;
-//     obj.pose.header.frame_id = "base_link";
-//     srv.request.objects.push_back(obj);
-//   }
-//   add_obj_.call(srv);
-// }
+  {
+    geometry_msgs::Pose obj_pose;
+    std::vector<double> pos;
+    if ( !nh.getParam ( "object_geometries/pose2", pos) )
+    {
+      ROS_ERROR_STREAM(nh.getNamespace() << " /object_geometries/pose2 not set. return");
+      return -1;
+    }
+    vecToPose(pos,obj_pose);
+    object_loader_msgs::AddObjects srv;  
+    {
+      object_loader_msgs::Object obj;
+      
+      obj.object_type="wall2";
+      
+      obj.pose.pose = obj_pose;
+      obj.pose.header.frame_id = "base_link";
+      srv.request.objects.push_back(obj);
+    }
+    add_obj_.call(srv);
+  }
 // {
 //   geometry_msgs::Pose obj_pose;
 //   std::vector<double> pos;
@@ -470,9 +470,9 @@ int main(int argc, char **argv)
     pub_trg.publish(d_trg_msg);
     pub_col.publish(d_col_msg);
 
-    ROS_INFO_STREAM_THROTTLE(.1,GREEN<< "[arbitration_node] collision distance: " << coll_distance<<" --> alpha: "<<alpha_col);
-    ROS_INFO_STREAM_THROTTLE(.1,CYAN<<"[arbitration_node] target distance : "<< trg_distance <<" --> alpha target: "<<alpha_trg);
-    ROS_INFO_STREAM_THROTTLE(.1,MAGENTA<<"[arbitration_node] alpha : "<< alpha);
+    ROS_INFO_STREAM_THROTTLE(2,GREEN<< "[arbitration_node] collision distance: " << coll_distance<<" --> alpha: "<<alpha_col);
+    ROS_INFO_STREAM_THROTTLE(2,CYAN<<"[arbitration_node] target distance : "<< trg_distance <<" --> alpha target: "<<alpha_trg);
+    ROS_INFO_STREAM_THROTTLE(2,MAGENTA<<"[arbitration_node] alpha : "<< alpha);
 
     al.publishDistance();
 

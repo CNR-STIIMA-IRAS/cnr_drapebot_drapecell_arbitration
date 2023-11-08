@@ -49,7 +49,7 @@ bool GTTrajArbitration::getImpedanceParams(Eigen::Vector6d& M, Eigen::Vector6d& 
   if (is_damping_ratio)
   {
     Eigen::Vector6d d_tmp;
-      for (int i=0; i<D_r.size();i++)
+      for (size_t i=0; i<D_r.size();i++)
         d_tmp(i) = D_r.data()[i] * 2 * std::sqrt( M_r.data()[i] * K_r.data()[i] );
       C = d_tmp;
   }
@@ -290,10 +290,20 @@ try
     this->template add_subscriber<geometry_msgs::WrenchStamped>(
           external_wrench_topic,5,boost::bind(&GTTrajArbitration::wrenchCallback,this,_1), false);
     
-    this->template add_subscriber<std_msgs::Float32>("/alpha",5,boost::bind(&GTTrajArbitration::setAlpha,this,_1), false);
-    this->template add_subscriber<geometry_msgs::PoseStamped>("/human_target",5,boost::bind(&GTTrajArbitration::setHumanTargetPoseCallback,this,_1), false);
+    std::string alpha_topic;
+    GET_AND_DEFAULT( this->getControllerNh(), "alpha_topic", alpha_topic, "/alpha");
+    this->template add_subscriber<std_msgs::Float32>(alpha_topic,5,boost::bind(&GTTrajArbitration::setAlpha,this,_1), false);
+    //this->template add_subscriber<std_msgs::Float32>("/alpha",5,boost::bind(&GTTrajArbitration::setAlpha,this,_1), false);
     
-    this->template add_subscriber<std_msgs::Bool>("/black_depth",5,boost::bind(&GTTrajArbitration::forceCheck,this,_1), false);
+    std::string human_target_topic;
+    GET_AND_DEFAULT( this->getControllerNh(), "human_target_topic", human_target_topic, "/human_target");
+    this->template add_subscriber<geometry_msgs::PoseStamped>(human_target_topic,5,boost::bind(&GTTrajArbitration::setHumanTargetPoseCallback,this,_1), false);
+    //this->template add_subscriber<geometry_msgs::PoseStamped>("/human_target",5,boost::bind(&GTTrajArbitration::setHumanTargetPoseCallback,this,_1), false);
+    
+    std::string black_depth_topic;
+    GET_AND_DEFAULT( this->getControllerNh(), "black_depth_topic", black_depth_topic, "/black_depth");
+    this->template add_subscriber<std_msgs::Bool>(black_depth_topic,5,boost::bind(&GTTrajArbitration::forceCheck,this,_1), false);
+    //this->template add_subscriber<std_msgs::Bool>("/black_depth",5,boost::bind(&GTTrajArbitration::forceCheck,this,_1), false);
     
     GET_AND_DEFAULT( this->getControllerNh(), "robot_active", robot_active_, true);
     GET_AND_DEFAULT( this->getControllerNh(), "use_cartesian_reference", use_cartesian_reference_, false);
